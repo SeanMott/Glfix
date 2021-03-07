@@ -1,4 +1,6 @@
-
+workspace "Glfix"
+    architecture "x86"
+    startproject "Sandbox"
 
     configurations
     {
@@ -80,6 +82,66 @@ project "Glfix"
             --"%{prj.name}/src/**.c",
             --include window platform code
         }
+    
+    filter "configurations:Debug"
+        defines "GLFIX_DEBUG"
+        symbols "On"
+    
+    filter "configurations:Release"
+        defines "GLFIX_RELEASE"
+        optimize "On"
+    
+    filter "configurations:Dist"
+        defines "GLFIX_DIST"
+        optimize "On"
+
+--Openglfix test app
+project "Sandbox"
+    location "Sandbox"
+    kind "ConsoleApp"
+    language "C++"
+
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
+
+    files 
+    {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.c",
+        "%{prj.name}/src/**.hpp",
+        "%{prj.name}/src/**.cpp",
+    }
+    
+    includedirs
+    {
+        "%{includeDir.Glad}",
+        "%{includeDir.GLFW}",
+        "%{includeDir.glm}",
+        --"%{includeDir.stb}",
+        "%{prj.name}/src",
+        "Glfix/includes"
+    }
+    
+    links
+    {
+        "Glfix"
+        --"StbImage",
+        --"Glad",
+        --"GLFW",
+        --"opengl32.lib"
+    }
+
+    defines
+    {
+        "GLFW_STATIC",
+        "GLFW_INCLUDE_NONE",
+        "GLM_FORCE_RADIANS",
+        "GLM_FORCE_DEPTH_ZERO_TO_ONE",
+    }
+
+    filter "system:windows"
+        staticruntime "On"
+        systemversion "latest"
     
     filter "configurations:Debug"
         defines "GLFIX_DEBUG"

@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 	//gets the contents of a file
-	const char* Glfix_FileHandler_OpenFile(const char* filepath);
+	const char* Glfix_FileHandler_ReadFile(const char* filepath);
 	//checks if two strings match
 	const char* Glfix_FileHandler_StringMatch(const char* string1, const char* string2);
 

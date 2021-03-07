@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 	//gets the contents of a file
-	const char* Glfix_FileHandler_OpenFile(const char* filepath)
+	const char* Glfix_FileHandler_ReadFile(const char* filepath)
 	{
 		FILE* file;
 		char* text = 0;

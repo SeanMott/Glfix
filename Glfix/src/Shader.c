@@ -78,14 +78,14 @@ static inline int32_t Glfix_Shader_CompileShader(const char* source, uint32_t ty
 Glfix_Shader_Shader* Glfix_Shader_CreateVertex(const char* vertexPath, const char* fragmentPath, const char* geometryPath)
 {
 	//read vertex and fragment path
-	int32_t v = Glfix_Shader_CompileShader(Glfix_FileHander_ReadTextFile(vertexPath), GL_VERTEX_SHADER);
+	int32_t v = Glfix_Shader_CompileShader(Glfix_FileHandler_ReadFile(vertexPath), GL_VERTEX_SHADER);
 	if (v == -1)
 	{
 		//LogError("Vertex Shader Fail", "Failed to compile Vertex Shader!");
 		return NULL;
 	}
 
-	int32_t f = Glfix_Shader_CompileShader(Glfix_FileHander_ReadTextFile(fragmentPath), GL_FRAGMENT_SHADER);
+	int32_t f = Glfix_Shader_CompileShader(Glfix_FileHandler_ReadFile(fragmentPath), GL_FRAGMENT_SHADER);
 	if (f == -1)
 	{
 		//LogError("Vertex Shader Fail", "Failed to compile Fragment Shader!");
@@ -95,7 +95,7 @@ Glfix_Shader_Shader* Glfix_Shader_CreateVertex(const char* vertexPath, const cha
 	int32_t g;
 	if (geometryPath)
 	{
-		g = Glfix_Shader_CompileShader(Glfix_FileHander_ReadTextFile(geometryPath), GL_GEOMETRY_SHADER);
+		g = Glfix_Shader_CompileShader(Glfix_FileHandler_ReadFile(geometryPath), GL_GEOMETRY_SHADER);
 		if (g == -1)
 			return NULL;
 	}
