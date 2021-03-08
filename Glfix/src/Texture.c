@@ -112,6 +112,41 @@ Glfix_Texture_Texture* Glfix_Texture_Create2D(const char* path, bool flipImage, 
 	return texture;
 }
 
+Glfix_Texture_Texture* Glfix_Texture_Create(Glfix_Texture_CreateInfo* info)
+{
+	if (!info)
+	{
+		LogError("NULL Texture Create Info", "Create Info is NULL can not make texture!");
+		return NULL;
+	}
+
+	Glfix_Texture_Texture* texture = malloc(sizeof(Glfix_Texture_Texture));
+
+	//if making a 2D texture
+	if (info->type == Glfix_TextureType_2D)
+	{
+		texture->type = Glfix_TextureType_2D;
+		glGenTextures(1, &texture->id);
+		glBindTexture(GL_TEXTURE_2D, texture->id);
+
+		// set the texture wrapping parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// set texture filtering parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		glTexImage2D(GL_TEXTURE_2D, info->mipMapLevel, Glfix_Formate_GetNative(info->internalFormate), info->width, info->height, 0,
+			Glfix_Formate_GetNative(info->externalFormate), Glfix_Formate_GetNative(info->pixelDatatype), info->extraData);
+	}
+
+	//others
+
+
+	return texture;
+}
+
 void Glfix_Texture_Destroy(Glfix_Texture_Texture* texture)
 {
 	if (!texture)

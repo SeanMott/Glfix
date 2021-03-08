@@ -8,6 +8,8 @@
 extern "C" {
 #endif
 
+#include <Glfix\Formate.h>
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -32,9 +34,26 @@ extern "C" {
 
 	} Glfix_Texture_Texture;
 
+	//defines create info for defining a texture
+	typedef struct
+	{
+		Glfix_Texture_TextureType type;
+		int32_t mipMapLevel;
+		Glfix_Formate_Data internalFormate;
+		int32_t width, height;
+		int32_t border; //is ignored when making 2D textures
+		Glfix_Formate_Data externalFormate;
+		Glfix_Formate_Data pixelDatatype;
+		void* extraData;
+
+	} Glfix_Texture_CreateInfo;
+
 	//creates a Texture 2D
 	Glfix_Texture_Texture* Glfix_Texture_Create2D(const char* path, bool flipImage, bool makeBackgroundTrans);
 	//add create methods for other Texture types
+
+	//creates a texture based on create info
+	Glfix_Texture_Texture* Glfix_Texture_Create(Glfix_Texture_CreateInfo* info);
 
 	//destroys a Texture
 	void Glfix_Texture_Destroy(Glfix_Texture_Texture* texture);
