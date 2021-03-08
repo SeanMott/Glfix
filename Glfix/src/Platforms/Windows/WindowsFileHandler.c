@@ -1,13 +1,9 @@
 //the windows implementation of the File Handler
 
-#include <gpch.h>
 #include <Util\FileHandler.h>
 
 #include <string.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdio.h>
 
 	//gets the contents of a file
 	const char* Glfix_FileHandler_ReadFile(const char* filepath)
@@ -36,11 +32,7 @@ extern "C" {
 	}
 
 	//checks if two strings match
-	const char* Glfix_FileHandler_StringMatch(const char* string1, const char* string2)
+	bool Glfix_FileHandler_StringMatch(const char* string1, const char* string2)
 	{
 		return (strcmp(string1, string2) == 0 ? true : false);
 	}
-
-#ifdef __cplusplus
-}
-#endif
