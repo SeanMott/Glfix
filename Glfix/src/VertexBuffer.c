@@ -117,16 +117,15 @@ void Glfix_VertexBuffer_Unbind()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Glfix_VertexBuffer_Draw(Glfix_VertexBuffer_Buffer* buffer, Glfix_DrawType_Type primitiveType, uint32_t startIndex)
+void Glfix_VertexBuffer_SendData(const void* data, uint32_t dataSize)
 {
-	if (!buffer)
-	{
-		LogError("NULL Vertex Buffer", "Buffer is NULL can not draw!");
-		return;
-	}
+	glBufferSubData(GL_ARRAY_BUFFER, 0, dataSize, data);
+}
 
+void Glfix_VertexBuffer_Draw(Glfix_DrawType_Type primitiveType, uint32_t startIndex, uint32_t vertexSize)
+{
 	if (primitiveType == Glfix_PrimitiveType_Triangles)
-		glDrawArrays(GL_TRIANGLES, startIndex, buffer->size);
+		glDrawArrays(GL_TRIANGLES, startIndex, vertexSize);
 	else if (primitiveType == Glfix_PrimitiveType_Points)
-		glDrawArrays(GL_POINTS, startIndex, buffer->size);
+		glDrawArrays(GL_POINTS, startIndex, vertexSize);
 }

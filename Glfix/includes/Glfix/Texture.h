@@ -33,7 +33,7 @@ extern "C" {
 	} Glfix_Texture_Texture;
 
 	//creates a Texture 2D
-	Glfix_Texture_Texture* Glfix_Texture_Create2D(const char* path, bool makeBackgroundTrans);
+	Glfix_Texture_Texture* Glfix_Texture_Create2D(const char* path, bool flipImage, bool makeBackgroundTrans);
 	//add create methods for other Texture types
 
 	//destroys a Texture

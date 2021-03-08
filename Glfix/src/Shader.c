@@ -326,32 +326,32 @@ void Glfix_Shader_SetFloat4(Glfix_Shader_Shader* shader, const char* name, float
 	glUniform4f(Glfix_Shader_GetUniformLocation(shader, name), value1, value2, value3, value4);
 }
 
-void Glfix_Shader_SetVec2(Glfix_Shader_Shader* shader, const char* name, float* value)
+void Glfix_Shader_SetVec2(Glfix_Shader_Shader* shader, const char* name, const float* value)
 {
 	glUniform2fv(Glfix_Shader_GetUniformLocation(shader, name), 2, value);
 }
 
-void Glfix_Shader_SetVec3(Glfix_Shader_Shader* shader, const char* name, float* value)
+void Glfix_Shader_SetVec3(Glfix_Shader_Shader* shader, const char* name, const float* value)
 {
 	glUniform3fv(Glfix_Shader_GetUniformLocation(shader, name), 3, value);
 }
 
-void Glfix_Shader_SetVec4(Glfix_Shader_Shader* shader, const char* name, float* value)
+void Glfix_Shader_SetVec4(Glfix_Shader_Shader* shader, const char* name, const float* value)
 {
 	glUniform4fv(Glfix_Shader_GetUniformLocation(shader, name), 4, value);
 }
 
-void Glfix_Shader_SetMat2(Glfix_Shader_Shader* shader, const char* name, bool transpose, float* value)
+void Glfix_Shader_SetMat2(Glfix_Shader_Shader* shader, const char* name, bool transpose, const float* value)
 {
 	glUniformMatrix2fv(Glfix_Shader_GetUniformLocation(shader, name), 1, transpose, value);
 }
 
-void Glfix_Shader_SetMat3(Glfix_Shader_Shader* shader, const char* name, bool transpose, float* value)
+void Glfix_Shader_SetMat3(Glfix_Shader_Shader* shader, const char* name, bool transpose, const float* value)
 {
 	glUniformMatrix3fv(Glfix_Shader_GetUniformLocation(shader, name), 1, transpose, value);
 }
 
-void Glfix_Shader_SetMat4(Glfix_Shader_Shader* shader, const char* name, bool transpose, float* value)
+void Glfix_Shader_SetMat4(Glfix_Shader_Shader* shader, const char* name, bool transpose, const float* value)
 {
 	glUniformMatrix4fv(Glfix_Shader_GetUniformLocation(shader, name), 1, transpose, value);
 }

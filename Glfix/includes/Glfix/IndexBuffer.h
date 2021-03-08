@@ -32,7 +32,7 @@ extern "C" {
 	void Glfix_IndexBuffer_Unbind();
 
 	//draws a buffer || assumes it's already been bound
-	void Glfix_IndexBuffer_Draw(Glfix_IndexBuffer_Buffer* buffer, Glfix_DrawType_Type primitiveType, uint32_t startIndex);
+	void Glfix_IndexBuffer_Draw(Glfix_DrawType_Type primitiveType, uint32_t startIndex, uint32_t indexCount);
 
 #ifdef __cplusplus
 

@@ -9,7 +9,7 @@
 
 #define EXTENTION_LENGTH_CAP 20
 
-Glfix_Texture_Texture* Glfix_Texture_Create2D(const char* path, bool makeBackgroundTrans)
+Glfix_Texture_Texture* Glfix_Texture_Create2D(const char* path, bool flipImage, bool makeBackgroundTrans)
 {
 	if (!path)
 	{
@@ -63,7 +63,7 @@ Glfix_Texture_Texture* Glfix_Texture_Create2D(const char* path, bool makeBackgro
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//flips image
-	stbi_set_flip_vertically_on_load(1);
+	stbi_set_flip_vertically_on_load(flipImage);
 
 	//load image, create texture and generate mipmaps
 

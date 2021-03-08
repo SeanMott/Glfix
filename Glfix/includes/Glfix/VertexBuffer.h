@@ -42,8 +42,11 @@ extern "C" {
 	//unbinds a buffer
 	void Glfix_VertexBuffer_Unbind();
 
+	//sends data to the GPU via the buffer || assumes it's bound already
+	void Glfix_VertexBuffer_SendData(const void* data, uint32_t dataSize);
+
 	//draws a buffer || assumes it's already been bound
-	void Glfix_VertexBuffer_Draw(Glfix_VertexBuffer_Buffer* buffer, Glfix_DrawType_Type primitiveType, uint32_t startIndex);
+	void Glfix_VertexBuffer_Draw(Glfix_DrawType_Type primitiveType, uint32_t startIndex, uint32_t vertexSize);
 
 #ifdef __cplusplus
 

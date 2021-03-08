@@ -65,18 +65,12 @@ void Glfix_IndexBuffer_Unbind()
 }
 
 //draws a buffer || assumes it's already been bound
-void Glfix_IndexBuffer_Draw(Glfix_IndexBuffer_Buffer* buffer, Glfix_DrawType_Type primitiveType, uint32_t startIndex)
+void Glfix_IndexBuffer_Draw(Glfix_DrawType_Type primitiveType, uint32_t startIndex, uint32_t indexCount)
 {
-	if (!buffer)
-	{
-		LogError("Index Buffer NULL", "The Index Buffer was NULL, can not draw buffer.");
-		return;
-	}
-
 	//triangles
 	if (primitiveType == Glfix_PrimitiveType_Triangles)
-		glDrawElements(GL_TRIANGLES, buffer->count, GL_UNSIGNED_INT, startIndex);
+		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, startIndex);
 	//points
 	else if (primitiveType == Glfix_PrimitiveType_Points)
-		glDrawElements(GL_POINTS, buffer->count, GL_UNSIGNED_INT, startIndex);
+		glDrawElements(GL_POINTS, indexCount, GL_UNSIGNED_INT, startIndex);
 }

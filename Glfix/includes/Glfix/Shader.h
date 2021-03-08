@@ -89,18 +89,18 @@ extern "C" {
 	void Glfix_Shader_SetFloat4(Glfix_Shader_Shader* shader, const char* name, float value1, float value2, float value3, float value4);
 
 	//pass a float vec2 uniform || expects a 2 element array
-	void Glfix_Shader_SetVec2(Glfix_Shader_Shader* shader, const char* name, float* value);
-	//pass a float vec3 uniform || expects a 3 element array
-	void Glfix_Shader_SetVec3(Glfix_Shader_Shader* shader, const char* name, float* value);
-	//pass a float vec4 uniform || expects a 4 element array
-	void Glfix_Shader_SetVec4(Glfix_Shader_Shader* shader, const char* name, float* value);
+	void Glfix_Shader_SetVec2(Glfix_Shader_Shader* shader, const char* name, const float* value);
+	//pass a float vec3 uniform || expects a 3 element array				 
+	void Glfix_Shader_SetVec3(Glfix_Shader_Shader* shader, const char* name, const float* value);
+	//pass a float vec4 uniform || expects a 4 element array				 
+	void Glfix_Shader_SetVec4(Glfix_Shader_Shader* shader, const char* name, const float* value);
 
 	//pass a mat2 uniform || expects a 2 element array
-	void Glfix_Shader_SetMat2(Glfix_Shader_Shader* shader, const char* name, bool transpose, float* value);
-	//pass a mat3 uniform || expects a 3 element array
-	void Glfix_Shader_SetMat3(Glfix_Shader_Shader* shader, const char* name, bool transpose, float* value);
-	//pass a mat4 uniform || expects a 4 element array
-	void Glfix_Shader_SetMat4(Glfix_Shader_Shader* shader, const char* name, bool transpose, float* value);
+	void Glfix_Shader_SetMat2(Glfix_Shader_Shader* shader, const char* name, bool transpose, const float* value);
+	//pass a mat3 uniform || expects a 3 element array										 
+	void Glfix_Shader_SetMat3(Glfix_Shader_Shader* shader, const char* name, bool transpose, const float* value);
+	//pass a mat4 uniform || expects a 4 element array										
+	void Glfix_Shader_SetMat4(Glfix_Shader_Shader* shader, const char* name, bool transpose, const float* value);
 
 #ifdef __cplusplus
 }
