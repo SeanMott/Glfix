@@ -42,7 +42,13 @@ Glfix_Context* Glfix_Context_Create(Glfix_Context_CreateInfo* info)
 	//if GLFW is not inited by the app, Glfix will do it
 	if (!info->GLFWIsInit && !GLFIX_HAS_INITED_GLFW)
 	{
-		glfwInit();
+		if (!glfwInit())
+		{
+			LogError("Failed GLFW", "Failed to init GLFW!");
+			free(context);
+			context = NULL;
+			return NULL;
+		}
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, info->openglMajorVer);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, info->openglMinorVer);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -118,6 +124,12 @@ void Glfix_Context_SetClearColor(float r, float g, float b, float a)
 //sets the clear color || expects a 4 element array
 void Glfix_Context_SetClearColorVec4(float* color)
 {
+	if (!color)
+	{
+		LogError("NULL Color", "A 4 element float array must be give to \"Glfix_Context_SetClearColorVec4\" yours was NULL!");
+		return;
+	}
+
 	glClearColor(color[0], color[1], color[2], color[3]);
 }
 

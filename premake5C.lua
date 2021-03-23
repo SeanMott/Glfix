@@ -1,4 +1,4 @@
--- defines the Premake file for the C++ Lib
+-- defines the Premake file for the C Lib
 
 configurations
     {
