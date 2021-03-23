@@ -1,51 +1,49 @@
+-- defines the Premake file for the C++ Lib
 
-
-    configurations
+configurations
     {
         "Debug",
         "Release",
         "Dist"
     }
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+    includeDir = {}
 
-includeDir = {}
+    includeDir["Glad"] = "Library/Glad/include"
+    includeDir["stb"] = "Library/stb"
+    includeDir["GLFW"] = "Library/GLFW/include"
+    includeDir["glm"] = "Library/glm"
+    
+    --includes the premake files
+    include "Library/GLFW"
+    include "Library/Glad"
+    include "Library/stb"
 
-includeDir["Glad"] = "Library/Glad/include"
-includeDir["stb"] = "Library/stb"
-includeDir["GLFW"] = "Library/GLFW/include"
-includeDir["glm"] = "Library/glm"
-
---includes the premake files
-include "Library/GLFW"
-include "Library/Glad"
-include "Library/stb"
-
---Glfix lib
 project "Glfix"
-    location "Glfix"
     kind "StaticLib"
-    language "C"
+    language "C++"
 
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
+    targetdir ("bin/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}")
+    objdir ("bin-obj/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}")
 
-    pchheader "gpch.h"
-    pchsource "%{prj.name}/src/gpch.c"
+    pchheader "gpch.hpp"
+    pchsource "src/gpch.cpp"
 
     files 
     {
-        "%{prj.name}/includes/**.h",
-        "%{prj.name}/src/**.c",
+        "includes/Glfix/**.hpp",
+        "includes/Util/**.hpp",
+        "includes/Util/**.h",
+        "src/**.cpp",
     }
     
     includedirs
     {
         "%{includeDir.Glad}",
         "%{includeDir.GLFW}",
-        --"%{includeDir.glm}",
+        "%{includeDir.glm}",
         "%{includeDir.stb}",
-        "%{prj.name}/includes"
+        "includes"
     }
     
     links
@@ -64,14 +62,19 @@ project "Glfix"
         --"GLM_FORCE_DEPTH_ZERO_TO_ONE",
     }
 
+    flags
+    {
+        "MultiProcessorCompile"
+    }
+
     filter "system:windows"
+        cppdialect "C++17"
         staticruntime "On"
         systemversion "latest"
     
         defines
         {
-            "Window_Build",
-            "Desktop_Build"
+            "Window_Build"
         }
 
         files 
