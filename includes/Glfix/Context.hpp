@@ -61,6 +61,9 @@ namespace Glfix
 		void EnableDepthBuffer(bool state);
 		//sets the view port
 		void SetViewPort(int32_t xPos, int32_t yPos, int32_t width, int32_t height) const;
+
+		//gets the window
+		inline void* GetWindow() const { return window; }
 	};
 }
 

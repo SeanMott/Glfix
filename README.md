@@ -1,16 +1,18 @@
 # Glfix
 A C library for using Opengl (does not handle windowing)
 
-# Supports
+# C++ Supports
 - Context
 
-# To Do
+# C Supports
+- Context
 - Vertex and Geometry shaders
 - Vertex Layout
 - 2D Textures || jpg and png
-- Vertex Buffer
+- Vertex Buffer (wraps Vertex Array)
 - Index Buffer
-- Vertex Array
+
+# To Do
 - Frame Buffer
 - Compute Shader
 - Tile Maps
