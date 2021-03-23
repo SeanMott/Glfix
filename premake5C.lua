@@ -31,8 +31,7 @@ project "Glfix"
 
     files 
     {
-        "includes/Glfix/**.h",
-        "includes/Util/**.h",
+        "includes/**.h",
         "src/**.c",
     }
     
