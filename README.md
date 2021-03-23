@@ -32,5 +32,5 @@ Git clone the repo and it's submodules `git clone --recurse-submodules https://g
 ### Building a Static C Lib
 To build Glfix as a C lib rename the `premake5C.lua` file to `premake5.lua`. This lib can be used with C++ the headers support C++ compiling.
 
-### Building a Static C Lib
+### Building a Static C++ Lib
 To build Glfix as a C++ lib rename the `premake5Cpp.lua` file to `premake5.lua`.
