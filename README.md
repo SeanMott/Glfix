@@ -4,7 +4,7 @@ A C library for using Opengl (does not handle windowing)
 # Supports
 - Context
 
-# To Do
+# To Do / Rewriting with the new API
 - Vertex and Geometry shaders
 - Vertex Layout
 - 2D Textures || jpg and png
