@@ -56,7 +56,7 @@ extern "C" {
 	//pass a int4 uniform || expects a 4 element array
 	void Glfix_Shader_SetInt4(Glfix_Shader* shader, const char* name, int32_t value1, int32_t value2, int32_t value3, int32_t value4);
 	//pass an array of ints as unform
-	void Glfix_Shader_SetIntArray(Glfix_Shader_Shader* shader, const char* name, uint32_t count, int32_t* values);
+	void Glfix_Shader_SetIntArray(Glfix_Shader* shader, const char* name, uint32_t count, int32_t* values);
 
 	//pass a int vec2 uniform || expects a 2 element array
 	void Glfix_Shader_SetIntVec2(Glfix_Shader* shader, const char* name, int32_t* value);
