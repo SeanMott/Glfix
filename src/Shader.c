@@ -256,6 +256,11 @@ void Glfix_Shader_SetInt4(Glfix_Shader* shader, const char* name, int32_t value1
 	glUniform4i(Glfix_Shader_GetUniformLocation(shader, name), value1, value2, value3, value4);
 }
 
+void Glfix_Shader_SetIntArray(Glfix_Shader_Shader* shader, const char* name, uint32_t count, int32_t* values)
+{
+	glUniform1iv(Glfix_Shader_GetUniformLocation(shader, name), count, values);
+}
+
 void Glfix_Shader_SetIntVec2(Glfix_Shader* shader, const char* name, int32_t* value)
 {
 	glUniform2iv(Glfix_Shader_GetUniformLocation(shader, name), 2, value);
