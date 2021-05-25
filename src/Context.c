@@ -42,6 +42,7 @@ Glfix_Context* Glfix_Context_Create(Glfix_Context_CreateInfo* info)
 	//if GLFW is not inited by the app, Glfix will do it
 	if (!info->GLFWIsInit && !GLFIX_HAS_INITED_GLFW)
 	{
+		
 		if (!glfwInit())
 		{
 			LogError("Failed GLFW", "Failed to init GLFW!");
@@ -63,6 +64,7 @@ Glfix_Context* Glfix_Context_Create(Glfix_Context_CreateInfo* info)
 			return NULL;
 		}
 		glfwMakeContextCurrent(context->window);
+		
 
 		info->viewPortWidth = 1; info->viewPortHeight = 1;
 		GLFIX_HAS_INITED_GLFW = true;

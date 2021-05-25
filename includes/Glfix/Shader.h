@@ -47,13 +47,13 @@ extern "C" {
 	//pass a bool unform
 	void Glfix_Shader_SetBool(Glfix_Shader* shader, const char* name, bool value);
 
-	//pass a int1 uniform
+	//pass a int uniform
 	void Glfix_Shader_SetInt(Glfix_Shader* shader, const char* name, int32_t value);
-	//pass a int2 uniform || expects a 2 element array
+	//pass a int vec2 uniform || expects a 2 element array
 	void Glfix_Shader_SetInt2(Glfix_Shader* shader, const char* name, int32_t value1, int32_t value2);
-	//pass a int3 uniform || expects a 3 element array
+	//pass a int vec3 uniform || expects a 3 element array
 	void Glfix_Shader_SetInt3(Glfix_Shader* shader, const char* name, int32_t value1, int32_t value2, int32_t value3);
-	//pass a int4 uniform || expects a 4 element array
+	//pass a int vec4 uniform || expects a 4 element array
 	void Glfix_Shader_SetInt4(Glfix_Shader* shader, const char* name, int32_t value1, int32_t value2, int32_t value3, int32_t value4);
 	//pass an array of ints as unform
 	void Glfix_Shader_SetIntArray(Glfix_Shader* shader, const char* name, uint32_t count, int32_t* values);
@@ -65,14 +65,16 @@ extern "C" {
 	//pass a int vec4 uniform || expects a 4 element array
 	void Glfix_Shader_SetIntVec4(Glfix_Shader* shader, const char* name, int32_t* value);
 
-	//pass a uint1 uniform
+	//pass a uint uniform
 	void Glfix_Shader_SetUint(Glfix_Shader* shader, const char* name, uint32_t value);
-	//pass a uint2 uniform 
+	//pass a uint vec2 uniform 
 	void Glfix_Shader_SetUint2(Glfix_Shader* shader, const char* name, uint32_t value1, uint32_t value2);
-	//pass a uint3 uniform 
+	//pass a uint vec3 uniform 
 	void Glfix_Shader_SetUint3(Glfix_Shader* shader, const char* name, uint32_t value1, uint32_t value2, uint32_t value3);
-	//pass a uint4 uniform 
+	//pass a uint vec4 uniform 
 	void Glfix_Shader_SetUint4(Glfix_Shader* shader, const char* name, uint32_t value1, uint32_t value2, uint32_t value3, uint32_t value4);
+	//pass an array of uints as unform
+	void Glfix_Shader_SetUintArray(Glfix_Shader* shader, const char* name, uint32_t count, uint32_t* values);
 
 	//pass a uint vec2 uniform || expects a 2 element array
 	void Glfix_Shader_SetUintVec2(Glfix_Shader* shader, const char* name, uint32_t* value);
@@ -81,14 +83,16 @@ extern "C" {
 	//pass a uint vec4 uniform || expects a 4 element array
 	void Glfix_Shader_SetUintVec4(Glfix_Shader* shader, const char* name, uint32_t* value);
 
-	//pass a float1 uniform
+	//pass a float uniform
 	void Glfix_Shader_SetFloat(Glfix_Shader* shader, const char* name, float value);
-	//pass a float2 uniform
+	//pass a float vec2 uniform
 	void Glfix_Shader_SetFloat2(Glfix_Shader* shader, const char* name, float value1, float value2);
-	//pass a float3 uniform 
+	//pass a float vec3 uniform 
 	void Glfix_Shader_SetFloat3(Glfix_Shader* shader, const char* name, float value1, float value2, float value3);
-	//pass a float4 uniform 
+	//pass a float vec4 uniform 
 	void Glfix_Shader_SetFloat4(Glfix_Shader* shader, const char* name, float value1, float value2, float value3, float value4);
+	//pass an array of floatss as unform
+	void Glfix_Shader_SetFloatArray(Glfix_Shader* shader, const char* name, uint32_t count, float* values);
 
 	//pass a float vec2 uniform || expects a 2 element array
 	void Glfix_Shader_SetVec2(Glfix_Shader* shader, const char* name, const float* value);

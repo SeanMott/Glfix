@@ -9,7 +9,47 @@
 
 #define EXTENTION_LENGTH_CAP 20
 
-Glfix_Texture* Glfix_Texture_Create2D(const char* path, bool flipImage, bool makeBackgroundTrans)
+void Glfix_Texture_InitCreateInfo(Glfix_Texture_CreateInfo* info)
+{
+	if (!info)
+	{
+		LogError("NULL Texture Create Info", "Create Info could not be inited, info pointer was NULL!\n");
+		return;
+	}
+
+	info->type = Glfix_TextureType_2D;
+
+	//wrapping
+	info->xWrapMode = Glfix_Texture_WrapMode_Repeat; //the X axis of the texture for wrapping
+	info->yWrapMode = Glfix_Texture_WrapMode_Repeat; //the Y axis of the texture for wrapping
+	info->zWrapMode = Glfix_Texture_WrapMode_Repeat; //the Z axis of the texture for wrapping, only used if 3D
+	info->borderColor = calloc(4, sizeof(float)); //a 4 element float array that defines the boarder color, if a wrap mode is ClampBorder.
+	info->borderColor[0] = 0.0f;
+	info->borderColor[1] = 0.0f;
+	info->borderColor[2] = 0.0f;
+	info->borderColor[3] = 1.0f;
+
+	//filtering data
+	info->minFilterMode = Glfix_Texture_FilterMode_Linear; //ovverided if mip map is used
+	info->magFilterMode = Glfix_Texture_FilterMode_Linear;
+
+	//mip map data
+	info->mipMapLevel = 0;
+	info->mipmapMode = Glfix_Texture_MipMapMode_LinearLinear;
+
+	//image data
+	info->width = 0;
+	info->height = 0;
+	info->border = 0;
+
+	info->internalFormate = Glfix_Formate_RGBA;
+	info->externalFormate = Glfix_Formate_RGBA;
+	info->pixelDatatype = Glfix_Formate_UByte;
+
+	info->extraData = NULL;
+}
+
+Glfix_Texture* Glfix_Texture_Create2D(const char* path, Glfix_Texture_CreateInfo* info, bool flipTexture)
 {
 	if (!path)
 	{
@@ -47,69 +87,49 @@ Glfix_Texture* Glfix_Texture_Create2D(const char* path, bool flipImage, bool mak
 		exPos++;
 	}
 
-	//load based on extension
-	Glfix_Texture* texture = malloc(sizeof(Glfix_Texture));
-	texture->type = Glfix_TextureType_2D;
-
-	glGenTextures(1, &texture->id);
-	glBindTexture(GL_TEXTURE_2D, texture->id);
-
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//flips image
-	stbi_set_flip_vertically_on_load(flipImage);
-
-	//load image, create texture and generate mipmaps
-
-	unsigned char* data = stbi_load(path, &texture->width, &texture->height, &texture->numChannels, 0);
-	if (data)
+	//settings based on file type
+	int32_t numChannels = 0;
+	info->extraData = stbi_load(path, &info->width, &info->height, &numChannels, 0);
+	if (info->extraData)
 	{
 		//JPEG
 		if (Glfix_FileHandler_StringMatch(extention, "jpg"))
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->width, texture->height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			info->internalFormate = Glfix_Formate_RGBA;
+			info->externalFormate = Glfix_Formate_RGB;
+			info->pixelDatatype = Glfix_Formate_UByte;
 		}
 
 		//PNG
 		else if (Glfix_FileHandler_StringMatch(extention, "png"))
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, (makeBackgroundTrans == true ? GL_RGBA : GL_RGB),
-				texture->width, texture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			info->internalFormate = Glfix_Formate_RGBA;
+			info->externalFormate = Glfix_Formate_RGBA;
+			info->pixelDatatype = Glfix_Formate_UByte;
 		}
 
 		//if not supported
 		else
 		{
 			LogData("Glfix Error: Unsupported Texture formate || The Texture formate is not supported. Check Github for updates or help add support to Glfix. Thanks :).\nFormate: \"%s\" Path: \"%s\"", extention, path);
-			free(texture);
 			free(extention);
 			free(flippedExtention);
-			stbi_image_free(data);
 			return NULL;
 		}
-
-		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
 	{
 		LogData("Glfix Error: Invalid Texture Path || Failed to load a Texture from the give path, check that it is there.\nPath: \"%s\"\n", path);
-		free(texture);
 		free(extention);
 		free(flippedExtention);
-		stbi_image_free(data);
 		return NULL;
 	}
 
+	Glfix_Texture* tex = Glfix_Texture_Create(info);
 	free(extention);
 	free(flippedExtention);
-	stbi_image_free(data);
-	return texture;
+	stbi_image_free(info->extraData);
+	return tex;
 }
 
 Glfix_Texture* Glfix_Texture_Create(Glfix_Texture_CreateInfo* info)
@@ -121,6 +141,7 @@ Glfix_Texture* Glfix_Texture_Create(Glfix_Texture_CreateInfo* info)
 	}
 
 	Glfix_Texture* texture = malloc(sizeof(Glfix_Texture));
+	texture->type = info->type;
 
 	//if making a 2D texture
 	if (info->type == Glfix_TextureType_2D)
@@ -130,19 +151,32 @@ Glfix_Texture* Glfix_Texture_Create(Glfix_Texture_CreateInfo* info)
 		glBindTexture(GL_TEXTURE_2D, texture->id);
 
 		// set the texture wrapping parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, Glfix_Texture_GetNativeWrapMode(info->xWrapMode));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, Glfix_Texture_GetNativeWrapMode(info->yWrapMode));
+
+		//sets boarder color if needed
+		if (info->xWrapMode == Glfix_Texture_WrapMode_ClampBorder || info->yWrapMode == Glfix_Texture_WrapMode_ClampBorder)
+			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, info->borderColor);
 
 		// set texture filtering parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, Glfix_Texture_GetNativeFilterMode(info->minFilterMode));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, Glfix_Texture_GetNativeFilterMode(info->magFilterMode));
 
-		glTexImage2D(GL_TEXTURE_2D, info->mipMapLevel, Glfix_Formate_GetNative(info->internalFormate), info->width, info->height, 0,
+		//genarate texture
+		glTexImage2D(GL_TEXTURE_2D, info->mipMapLevel, Glfix_Formate_GetNative(info->internalFormate), info->width, info->height, info->border,
 			Glfix_Formate_GetNative(info->externalFormate), Glfix_Formate_GetNative(info->pixelDatatype), info->extraData);
+
+		//genarate mip maps
+		if (info->mipMapLevel > 0)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, Glfix_Texture_GetNativeMipmapMode(info->mipmapMode));
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+
+		return texture;
 	}
 
 	//others
-
 
 	return texture;
 }
@@ -192,4 +226,66 @@ void Glfix_Texture_Unbind(Glfix_Texture* texture, uint32_t slot)
 		glBindTexture(GL_TEXTURE_2D, texture->id);
 
 	//other types
+}
+
+int32_t Glfix_Texture_GetNativeWrapMode(Glfix_Texture_Wrapmode mode)
+{
+	switch (mode)
+	{
+	case Glfix_Texture_WrapMode_ClampBorder:
+		return GL_CLAMP_TO_BORDER;
+	case Glfix_Texture_WrapMode_ClampEdge:
+		return GL_CLAMP_TO_EDGE;
+	case Glfix_Texture_WrapMode_MirrorRepeat:
+		return GL_MIRRORED_REPEAT;
+	case Glfix_Texture_WrapMode_Repeat:
+		return GL_REPEAT;
+
+	default:
+		return 0;
+	}
+}
+
+int32_t Glfix_Texture_GetNativeFilterMode(Glfix_Texture_Filtermode mode)
+{
+	switch (mode)
+	{
+	case Glfix_Texture_FilterMode_Linear:
+		return GL_LINEAR;
+	case Glfix_Texture_FilterMode_Nearest:
+		return GL_NEAREST;
+
+	default:
+		return 0;
+	}
+}
+
+int32_t Glfix_Texture_GetNativeMipmapMode(Glfix_Texture_Mipmapmode mode)
+{
+	switch (mode)
+	{
+	case Glfix_Texture_MipMapMode_NearestNearest:
+		return GL_NEAREST_MIPMAP_NEAREST;
+	case Glfix_Texture_MipMapMode_LinearLinear:
+		return GL_LINEAR_MIPMAP_LINEAR;
+	case Glfix_Texture_MipMapMode_LinearNearest:
+		return GL_LINEAR_MIPMAP_NEAREST;
+	case Glfix_Texture_MipMapMode_NearestLinear:
+		return GL_NEAREST_MIPMAP_LINEAR;
+
+	default:
+		return 0;
+	}
+}
+
+int32_t Glfix_Texture_GetNativeTextureType(Glfix_Texture_Type type)
+{
+	switch (type)
+	{
+	case Glfix_TextureType_2D:
+		return GL_TEXTURE_2D;
+
+	default:
+		return 0;
+	}
 }
