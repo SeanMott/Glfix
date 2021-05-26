@@ -47,6 +47,9 @@ extern "C" {
 	//pass a bool unform
 	void Glfix_Shader_SetBool(Glfix_Shader* shader, const char* name, bool value);
 
+	//gets the amount of textures the fragment texture can use
+	int32_t Glfix_Shader_FragTextureCap();
+
 	//pass a int uniform
 	void Glfix_Shader_SetInt(Glfix_Shader* shader, const char* name, int32_t value);
 	//pass a int vec2 uniform || expects a 2 element array

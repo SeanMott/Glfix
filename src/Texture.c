@@ -38,8 +38,8 @@ void Glfix_Texture_InitCreateInfo(Glfix_Texture_CreateInfo* info)
 	info->mipmapMode = Glfix_Texture_MipMapMode_LinearLinear;
 
 	//image data
-	info->width = 0;
-	info->height = 0;
+	info->width = 1;
+	info->height = 1;
 	info->border = 0;
 
 	info->internalFormate = Glfix_Formate_RGBA;

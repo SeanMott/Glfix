@@ -39,6 +39,7 @@ void Glfix_IndexBuffer_Destroy(Glfix_IndexBuffer* buffer)
 	if (!buffer)
 	{
 		LogWarning("Index Buffer NULL", "The Index Buffer was NULL, can not destroy buffer.");
+		return;
 	}
 
 	glDeleteBuffers(1, &buffer->id);

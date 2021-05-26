@@ -236,6 +236,13 @@ void Glfix_Shader_SetBool(Glfix_Shader* shader, const char* name, bool value)
 	glUniform1i(Glfix_Shader_GetUniformLocation(shader, name), value);
 }
 
+int32_t Glfix_Shader_FragTextureCap()
+{
+	int32_t count = 0;
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &count);
+	return count;
+}
+
 void Glfix_Shader_SetInt(Glfix_Shader* shader, const char* name, int32_t value)
 {
 	glUniform1i(Glfix_Shader_GetUniformLocation(shader, name), value);
