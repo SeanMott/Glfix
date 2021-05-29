@@ -30,9 +30,4 @@ Both C and C++ API can be found in the wiki. C_ will mark the C version. Cpp_ wi
 # Building
 Git clone the repo and it's submodules `git clone --recurse-submodules https://github.com/SeanMott/Glfix.git` <br>
 <br>
-
-### Building a Static C Lib
-To build Glfix as a C lib rename the `premake5C.lua` file to `premake5.lua`. This lib can be used with C++ the headers support C++ compiling.
-
-### Building a Static C++ Lib
-To build Glfix as a C++ lib rename the `premake5Cpp.lua` file to `premake5.lua`.
+The Premake5 file in the base dir has both a Glfix and Glfix++ static lib projects.
