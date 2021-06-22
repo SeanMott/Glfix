@@ -19,9 +19,9 @@ extern "C" {
 
 	}Glfix_IndexBuffer;
 
-	//creates a static buffer
+	//creates a static buffer || multiplies the size * sizeof(uint32_t);
 	Glfix_IndexBuffer* Glfix_IndexBuffer_CreateStatic(uint32_t* indices, uint32_t count);
-	//creates a dynamic buffer
+	//creates a dynamic buffer || multiplies the size * sizeof(uint32_t);
 	Glfix_IndexBuffer* Glfix_IndexBuffer_CreateDynamic(uint32_t count);
 	//destroys a buffer
 	void Glfix_IndexBuffer_Destroy(Glfix_IndexBuffer* buffer);
@@ -33,6 +33,8 @@ extern "C" {
 
 	//draws a buffer || assumes it's already been bound
 	void Glfix_IndexBuffer_Draw(Glfix_DrawType primitiveType, uint32_t startIndex, uint32_t indexCount);
+	//instance draws a buffer || assumes it's already been bound
+	void Glfix_IndexBuffer_InstanceDraw(Glfix_DrawType primitiveType, uint32_t startIndex, uint32_t indexCount, uint32_t instCount);
 
 #ifdef __cplusplus
 

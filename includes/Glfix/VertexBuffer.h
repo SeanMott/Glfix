@@ -47,6 +47,8 @@ extern "C" {
 
 	//draws a buffer || assumes it's already been bound
 	void Glfix_VertexBuffer_Draw(Glfix_DrawType primitiveType, uint32_t startIndex, uint32_t vertexSize);
+	//instance draws a buffer || assumes it's already been bound
+	void Glfix_VertexBuffer_InstanceDraw(Glfix_DrawType primitiveType, uint32_t startIndex, uint32_t vertexSize, uint32_t instCount);
 
 #ifdef __cplusplus
 

@@ -129,3 +129,11 @@ void Glfix_VertexBuffer_Draw(Glfix_DrawType primitiveType, uint32_t startIndex, 
 	else if (primitiveType == Glfix_DrawType_Points)
 		glDrawArrays(GL_POINTS, startIndex, vertexSize);
 }
+
+void Glfix_VertexBuffer_InstanceDraw(Glfix_DrawType primitiveType, uint32_t startIndex, uint32_t vertexSize, uint32_t instCount)
+{
+	if (primitiveType == Glfix_DrawType_Triangles)
+		glDrawArraysInstanced(GL_TRIANGLES, startIndex, vertexSize, instCount);
+	else if (primitiveType == Glfix_DrawType_Points)
+		glDrawArraysInstanced(GL_POINTS, startIndex, vertexSize, instCount);
+}

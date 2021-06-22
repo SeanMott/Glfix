@@ -75,3 +75,13 @@ void Glfix_IndexBuffer_Draw(Glfix_DrawType primitiveType, uint32_t startIndex, u
 	else if (primitiveType == Glfix_DrawType_Points)
 		glDrawElements(GL_POINTS, indexCount, GL_UNSIGNED_INT, startIndex);
 }
+
+void Glfix_IndexBuffer_InstanceDraw(Glfix_DrawType primitiveType, uint32_t startIndex, uint32_t indexCount, uint32_t instCount)
+{
+	//triangles
+	if (primitiveType == Glfix_DrawType_Triangles)
+		glDrawElementsInstanced(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, startIndex, instCount);
+	//points
+	else if (primitiveType == Glfix_DrawType_Points)
+		glDrawElementsInstanced(GL_POINTS, indexCount, GL_UNSIGNED_INT, startIndex, instCount);
+}
